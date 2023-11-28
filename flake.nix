@@ -11,10 +11,14 @@
           pkgs = nixpkgs.legacyPackages.${system};
           compiler = "ghc94";
           packageDependencies = (ps: [
+            ps.bytestring
             ps.containers
+            ps.directory
+            ps.lens
             ps.megaparsec
-            ps.text
+            ps.mtl
             ps.vector
+            ps.wreq
           ]);
           devDependencies = with pkgs.haskell.packages.${compiler}; [
             cabal-install

@@ -27,12 +27,17 @@ library
         import:           warnings
         exposed-modules:
                 AoC.Data.Grid.Rectangular
+                AoC.Net.Puzzle
                 AoC.Parser
         
         build-depends:
                 , base        ^>=4.17.2.1
+                , bytestring
+                , directory
+                , lens
                 , megaparsec
-                , text
+                , mtl
+                , wreq
         
         hs-source-dirs:   src
         default-language: Haskell2010
@@ -53,6 +58,6 @@ test-suite aoclib-test
         build-depends:
                 , aoclib
                 , base        ^>=4.17.2.1
+                , bytestring
                 , hspec
                 , megaparsec
-                , text
