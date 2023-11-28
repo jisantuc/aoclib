@@ -27,11 +27,14 @@ library
         import:           warnings
         exposed-modules:
                 AoC.Data.Grid.Rectangular
+                AoC.Data.Puzzle
                 AoC.Net.Puzzle
                 AoC.Parser
+                AoC.Parser.CLI
+                AoC.Parser.Testing
         
         build-depends:
-                , base        ^>=4.17.2.1
+                , base                  ^>=4.17.2.1
                 , bytestring
                 , directory
                 , hspec
