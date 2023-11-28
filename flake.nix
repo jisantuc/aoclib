@@ -39,10 +39,7 @@
               packages = [ haskell ] ++ devDependencies;
             };
 
-          packages = {
-            core = pkgs.haskell.packages.${compiler}.callCabal2nix "aoclib-core" ./. { };
-            testing = pkgs.haskell.packages.${compiler}.callCabal2nix "aoclib-testing" ./. { };
-          };
+          packages.default = pkgs.haskell.packages.${compiler}.callCabal2nix "aoclib" ./. { };
         }
       );
 }
