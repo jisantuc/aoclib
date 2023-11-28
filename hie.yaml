@@ -1,7 +1,10 @@
 cradle:
   cabal:
     - path: "src"
-      component: "lib:aoclib"
+      component: "aoclib:lib:aoclib-core"
+
+    - path: "src-testing"
+      component: "aoclib:lib:aoclib-testing"
 
     - path: "test"
       component: "aoclib:test:aoclib-test"
