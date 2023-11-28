@@ -34,6 +34,7 @@ library
                 , base        ^>=4.17.2.1
                 , bytestring
                 , directory
+                , hspec
                 , lens
                 , megaparsec
                 , mtl
@@ -41,10 +42,6 @@ library
         
         hs-source-dirs:   src
         default-language: Haskell2010
-
--- Modules included in this library but not exported.
--- other-modules:
-
 
 test-suite aoclib-test
         import:           warnings
