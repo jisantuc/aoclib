@@ -17,6 +17,7 @@
             ps.lens
             ps.megaparsec
             ps.mtl
+            ps.optparse-applicative
             ps.vector
             ps.wreq
           ]);

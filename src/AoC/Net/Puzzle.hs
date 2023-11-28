@@ -5,11 +5,10 @@
 module AoC.Net.Puzzle
   ( fetch,
     Config (..),
-    Year (..),
-    Day (..),
   )
 where
 
+import AoC.Data.Puzzle (Day, Year)
 import Control.Lens ((&), (.~), (^.))
 import Control.Monad.Reader (MonadReader (ask), MonadTrans (lift), ReaderT)
 import qualified Data.ByteString as Strict
@@ -19,10 +18,6 @@ import Data.Functor ((<&>))
 import Network.Wreq (defaults, getWith, header)
 import Network.Wreq.Lens (responseBody)
 import System.Directory (doesFileExist)
-
-newtype Year = Year Int deriving (Eq, Show) via Int
-
-newtype Day = Day Int deriving (Eq, Show) via Int
 
 data Config = Config
   { year :: Year,

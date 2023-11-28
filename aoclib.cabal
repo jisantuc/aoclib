@@ -38,6 +38,7 @@ library
                 , lens
                 , megaparsec
                 , mtl
+                , optparse-applicative
                 , wreq
         
         hs-source-dirs:   src
