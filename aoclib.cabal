@@ -54,6 +54,7 @@ test-suite aoclib-test
         type:             exitcode-stdio-1.0
         hs-source-dirs:   test
         other-modules:    AoC.Data.Grid.RectangularSpec
+                        , AoC.ParserSpec
         main-is:          Spec.hs
         
         -- Test dependencies.
@@ -61,5 +62,6 @@ test-suite aoclib-test
                 , aoclib
                 , base        ^>=4.17.2.1
                 , bytestring
+                , containers
                 , hspec
                 , megaparsec
