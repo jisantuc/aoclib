@@ -12,9 +12,11 @@ import AoC.Data.Puzzle (Day, Year)
 import Control.Lens ((&), (.~), (^.))
 import Control.Monad.Reader (MonadReader (ask), MonadTrans (lift), ReaderT)
 import qualified Data.ByteString as Strict
-import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as Lazy
 import Data.Functor ((<&>))
+import Data.Text (Text)
+import Data.Text.Encoding (decodeASCII')
+import qualified Data.Text.IO as TIO
 import Network.Wreq (defaults, getWith, header)
 import Network.Wreq.Lens (responseBody)
 import System.Directory (doesFileExist)
@@ -27,13 +29,13 @@ data Config = Config
   }
   deriving (Eq, Show)
 
-fetch :: ReaderT Config IO ByteString
+fetch :: ReaderT Config IO Text
 fetch = do
   config@(Config {cacheFile}) <- ask
   fileExists <- lift $ doesFileExist cacheFile
-  lift (if fileExists then Lazy.readFile cacheFile else fetchFromUrl config)
+  lift (if fileExists then TIO.readFile cacheFile else fetchFromUrl config)
 
-fetchFromUrl :: Config -> IO Lazy.ByteString
+fetchFromUrl :: Config -> IO Text
 fetchFromUrl (Config {year, day, token, cacheFile}) =
   let url = "https://adventofcode.com/" <> show year <> "/day/" <> show day <> "/input"
       sessionCookie = "session=" <> token
@@ -41,4 +43,6 @@ fetchFromUrl (Config {year, day, token, cacheFile}) =
    in do
         resp <- getWith opts url <&> (^. responseBody)
         Lazy.writeFile cacheFile resp
-        pure resp
+        case decodeASCII' (Strict.toStrict resp) of
+          Just t -> pure t
+          Nothing -> error "No good ascii text"

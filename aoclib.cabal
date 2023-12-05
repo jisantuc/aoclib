@@ -43,6 +43,7 @@ library
                 , megaparsec
                 , mtl
                 , optparse-applicative
+                , text
                 , wreq
         
         hs-source-dirs:   src
