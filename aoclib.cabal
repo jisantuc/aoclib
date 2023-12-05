@@ -66,3 +66,4 @@ test-suite aoclib-test
                 , containers
                 , hspec
                 , megaparsec
+                , text
