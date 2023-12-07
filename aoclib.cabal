@@ -29,6 +29,7 @@ library
                 AoC.Data.Grid.Rectangular
                 AoC.Data.Puzzle
                 AoC.Net.Puzzle
+                AoC.Optimization
                 AoC.Parser
                 AoC.Parser.CLI
                 AoC.Parser.Testing
@@ -56,6 +57,7 @@ test-suite aoclib-test
         hs-source-dirs:   test
         other-modules:    AoC.Data.Grid.RectangularSpec
                         , AoC.ParserSpec
+                        , AoC.OptimizationSpec
         main-is:          Spec.hs
         
         -- Test dependencies.
