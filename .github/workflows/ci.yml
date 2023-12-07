@@ -22,10 +22,4 @@ jobs:
           access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           substituters = https://cache.iog.io
           trusted-public-keys  = cache.iog.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=
-    - uses: cachix/cachix-action@v13
-      with:
-        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: jisantuc
     - run: nix build
-      env:
-        CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
