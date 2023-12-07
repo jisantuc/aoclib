@@ -15,12 +15,7 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest]
     steps:
-    - uses: actions/checkout@v4.1.0
-    # I install git-crypt into the home environment, so it'll be available once
-    # the test script runs, _but_ for the test script to run I have to be able to
-    # decrypt secrets.nix, which requires git-crypt.
-    # So here only, and anywhere I need to run this in the future, I one-off install
-    # git-crypt ahead of time, and use it in the next step to unlock the repo.
+    - uses: actions/checkout@v4
     - uses: cachix/install-nix-action@v24
       with:
         extra_nix_config: |
