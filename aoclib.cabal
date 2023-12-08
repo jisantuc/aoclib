@@ -27,6 +27,7 @@ library
         import:           warnings
         exposed-modules:
                 AoC.Data.Grid.Rectangular
+                AoC.Data.Interval
                 AoC.Data.Puzzle
                 AoC.Net.Puzzle
                 AoC.Optimization
@@ -55,9 +56,12 @@ test-suite aoclib-test
         default-language: Haskell2010
         type:             exitcode-stdio-1.0
         hs-source-dirs:   test
-        other-modules:    AoC.Data.Grid.RectangularSpec
-                        , AoC.ParserSpec
-                        , AoC.OptimizationSpec
+        other-modules:
+                AoC.Data.Grid.RectangularSpec
+                AoC.Data.IntervalSpec
+                AoC.OptimizationSpec
+                AoC.ParserSpec
+        
         main-is:          Spec.hs
         
         -- Test dependencies.
