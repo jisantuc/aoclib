@@ -26,6 +26,7 @@ common warnings
 library
         import:           warnings
         exposed-modules:
+                AoC.Data.Grid.Parser
                 AoC.Data.Grid.Rectangular
                 AoC.Data.Interval
                 AoC.Data.Puzzle
