@@ -1,7 +1,8 @@
+{-# LANGUAGE MultiParamTypeClasses #-}
+
 module AoC.Data.IntervalSpec where
 
-import AoC.Data.Interval (Interval (..), covers, touches)
-import qualified AoC.Data.Interval as Interval
+import AoC.Data.Interval (Interval (..), IntervalLit (..), covers, touches)
 import Data.Foldable (traverse_)
 import Test.Hspec (Spec, describe, it, shouldBe, shouldNotBe)
 
@@ -9,38 +10,87 @@ spec :: Spec
 spec = describe "intervals" $ do
   describe "point lookup" $ do
     it "finds points in ranges correctly" $ do
-      (4 :: Int) `Interval.elem` Interval 4 6 `shouldBe` True
-      (6 :: Int) `Interval.elem` Interval 4 6 `shouldBe` True
-      (7 :: Int) `Interval.elem` Interval 4 6 `shouldNotBe` True
+      (4 :: Int) `containedBy` IntervalLit 4 6 `shouldBe` True
+      (6 :: Int) `containedBy` IntervalLit 4 6 `shouldBe` True
+      (7 :: Int) `containedBy` IntervalLit 4 6 `shouldNotBe` True
   describe "range lookup" $
-    let interval1 :: Interval Int
-        interval1 = Interval 5 10
-        interval2 :: Interval Int
-        interval2 = Interval 7 12
-        interval3 :: Interval Int
-        interval3 = Interval 10 15
-        interval4 :: Interval Int
-        interval4 = Interval 0 15
-        interval5 :: Interval Int
-        interval5 = Interval 100 101
+    let intervalLit1 :: IntervalLit Int
+        intervalLit1 = IntervalLit 5 10
+        intervalLit2 :: IntervalLit Int
+        intervalLit2 = IntervalLit 7 12
+        intervalLit3 :: IntervalLit Int
+        intervalLit3 = IntervalLit 10 15
+        intervalLit4 :: IntervalLit Int
+        intervalLit4 = IntervalLit 0 15
+        intervalLit5 :: IntervalLit Int
+        intervalLit5 = IntervalLit 100 101
+        intervalWrapper1 = IntervalWrapper (IntervalLit 'e' 'j', "one")
+        intervalWrapper2 = IntervalWrapper (IntervalLit 'g' 'l', "two")
+        intervalWrapper3 = IntervalWrapper (IntervalLit 'j' 'o', "three")
+        intervalWrapper4 = IntervalWrapper (IntervalLit 'a' 'o', "four")
+        intervalWrapper5 = IntervalWrapper (IntervalLit 'w' 'z', "five")
      in do
-          it "finds whether ranges touch correctly" $
-            do
-              traverse_
-                (\interval -> interval `touches` interval `shouldBe` True)
-                [interval1, interval2, interval3, interval4, interval5]
-              traverse_
-                (\interval -> interval1 `touches` interval `shouldBe` True)
-                [interval2, interval3, interval4]
-              interval1 `touches` interval5 `shouldBe` False
-          it "finds whether ranges cover correctly" $
-            do
-              traverse_
-                (\interval -> interval `covers` interval `shouldBe` True)
-                [interval1, interval2, interval3, interval4, interval5]
-              traverse_
-                (\interval -> interval4 `covers` interval `shouldBe` True)
-                [interval1, interval2, interval3]
-              traverse_
-                (\interval -> interval5 `covers` interval `shouldBe` False)
-                [interval1, interval2, interval3, interval4]
+          touchesSuite "IntervalLit" intervalLit1 intervalLit2 intervalLit3 intervalLit4 intervalLit5
+          touchesSuite
+            "IntervalWrapper"
+            intervalWrapper1
+            intervalWrapper2
+            intervalWrapper3
+            intervalWrapper4
+            intervalWrapper5
+          coversSuite "IntervalLit" intervalLit1 intervalLit2 intervalLit3 intervalLit4 intervalLit5
+          coversSuite "IntervalWrapper" intervalWrapper1 intervalWrapper2 intervalWrapper3 intervalWrapper4 intervalWrapper5
+
+newtype IntervalWrapper = IntervalWrapper (IntervalLit Char, String)
+
+instance Interval Char IntervalWrapper where
+  intervalStart (IntervalWrapper (i, _)) = intervalStart i
+  intervalEnd (IntervalWrapper (i, _)) = intervalEnd i
+
+{- Test the touches relationship for five intervals arranged like:
+ - interval 1:            ------
+ - interval 2:              -------
+ - interval 3:                 -------
+ - interval 4: -----------------------
+ - interval 5:                                ----
+ -}
+touchesSuite ::
+  (Ord k, Interval k a) =>
+  String ->
+  a ->
+  a ->
+  a ->
+  a ->
+  a ->
+  Spec
+touchesSuite tag interval1 interval2 interval3 interval4 interval5 =
+  it ("finds whether ranges touch correctly for " ++ tag) $
+    do
+      traverse_
+        (\interval -> interval `touches` interval `shouldBe` True)
+        [interval1, interval2, interval3, interval4, interval5]
+      traverse_
+        (\interval -> interval1 `touches` interval `shouldBe` True)
+        [interval2, interval3, interval4]
+      interval1 `touches` interval5 `shouldBe` False
+
+{- Test the covers relationship for five intervals arranged like:
+ - interval 1:            ------
+ - interval 2:              -------
+ - interval 3:                 -------
+ - interval 4: -----------------------
+ - interval 5:                                ----
+ -}
+coversSuite :: (Ord k, Interval k a) => String -> a -> a -> a -> a -> a -> Spec
+coversSuite tag interval1 interval2 interval3 interval4 interval5 =
+  it ("finds whether ranges cover correctly for " ++ tag) $
+    do
+      traverse_
+        (\interval -> interval `covers` interval `shouldBe` True)
+        [interval1, interval2, interval3, interval4, interval5]
+      traverse_
+        (\interval -> interval4 `covers` interval `shouldBe` True)
+        [interval1, interval2, interval3]
+      traverse_
+        (\interval -> interval5 `covers` interval `shouldBe` False)
+        [interval1, interval2, interval3, interval4]
