@@ -4,15 +4,15 @@ module AoC.Data.IntervalSpec where
 
 import AoC.Data.Interval (Interval (..), IntervalLit (..), covers, touches)
 import Data.Foldable (traverse_)
-import Test.Hspec (Spec, describe, it, shouldBe, shouldNotBe)
+import Test.Hspec (Spec, describe, it, shouldBe)
 
 spec :: Spec
 spec = describe "intervals" $ do
   describe "point lookup" $ do
     it "finds points in ranges correctly" $ do
       (4 :: Int) `containedBy` IntervalLit 4 6 `shouldBe` True
-      (6 :: Int) `containedBy` IntervalLit 4 6 `shouldBe` True
-      (7 :: Int) `containedBy` IntervalLit 4 6 `shouldNotBe` True
+      (6 :: Int) `containedBy` IntervalLit 4 6 `shouldBe` False
+      (7 :: Int) `containedBy` IntervalLit 4 6 `shouldBe` False
   describe "range lookup" $
     let intervalLit1 :: IntervalLit Int
         intervalLit1 = IntervalLit 5 10

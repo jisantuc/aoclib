@@ -29,6 +29,7 @@ library
                 AoC.Data.Grid.Parser
                 AoC.Data.Grid.Rectangular
                 AoC.Data.Interval
+                AoC.Data.IntervalTree
                 AoC.Data.Puzzle
                 AoC.Net.Puzzle
                 AoC.Optimization
@@ -47,6 +48,7 @@ library
                 , mtl
                 , optparse-applicative
                 , text
+                , vector
                 , wreq
         
         hs-source-dirs:   src
@@ -60,6 +62,7 @@ test-suite aoclib-test
         other-modules:
                 AoC.Data.Grid.RectangularSpec
                 AoC.Data.IntervalSpec
+                AoC.Data.IntervalTreeSpec
                 AoC.OptimizationSpec
                 AoC.ParserSpec
         
@@ -74,3 +77,4 @@ test-suite aoclib-test
                 , hspec
                 , megaparsec
                 , text
+                , vector
