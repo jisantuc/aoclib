@@ -37,7 +37,7 @@ library
                 AoC.Parser.Testing
         
         build-depends:
-                , base                  ^>=4.17.2.1
+                , base                  ^>=4.19
                 , bytestring
                 , containers
                 , directory
@@ -68,7 +68,7 @@ test-suite aoclib-test
         -- Test dependencies.
         build-depends:
                 , aoclib
-                , base        ^>=4.17.2.1
+                , base        ^>=4.19
                 , bytestring
                 , containers
                 , hspec
