@@ -1,6 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    interval-index.url = "github:jisantuc/interval-index";
+    nixpkgs.follows = "interval-index/nixpkgs";
     utils.url = "github:numtide/flake-utils";
   };
 
@@ -9,38 +10,31 @@
       (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          compiler = "ghc948";
-          packageDependencies = (ps: [
-            ps.bytestring
-            ps.containers
-            ps.directory
-            ps.lens
-            ps.megaparsec
-            ps.mtl
-            ps.optparse-applicative
-            ps.vector
-            ps.wreq
-          ]);
-          devDependencies = with pkgs.haskell.packages.${compiler}; [
-            cabal-install
+          compiler = "ghc98";
+          haskellPackages = pkgs.haskell.packages.${compiler};
+          devDependencies = with haskellPackages; [
             cabal-fmt
+            cabal-gild
+            cabal-install
             haskell-language-server
             hlint
+            ormolu
           ];
-          testDependencies = (ps: [
-            ps.hspec
-            ps.hspec-discover
-          ]);
-          haskell = pkgs.haskell.packages.${compiler}.ghcWithPackages
-            (ps: packageDependencies ps ++ testDependencies ps);
         in
         {
-          devShells.default = pkgs.mkShell
-            {
-              packages = [ haskell ] ++ devDependencies;
-            };
+          devShells.default = haskellPackages.shellFor {
+            packages = ps: [ (ps.callCabal2nix "aoclib" ./. { }) ];
+            nativeBuildInputs = devDependencies;
+            withHoogle = true;
+          };
+          devShells.ci = haskellPackages.shellFor {
+            packages = ps: [ (ps.callCabal2nix "aoclib" ./. { }) ];
+            nativeBuildInputs = with haskellPackages; [
+              cabal-install
+            ];
+          };
 
-          packages.default = pkgs.haskell.packages.${compiler}.callCabal2nix "aoclib" ./. { };
+          packages.default = haskellPackages.callCabal2nix "aoclib" ./. { };
         }
       );
 }
