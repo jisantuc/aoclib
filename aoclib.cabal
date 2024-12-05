@@ -47,6 +47,7 @@ library
                 , mtl
                 , optparse-applicative
                 , text
+                , vector
                 , wreq
         
         hs-source-dirs:   src
@@ -74,3 +75,4 @@ test-suite aoclib-test
                 , hspec
                 , megaparsec
                 , text
+                , vector
