@@ -13,6 +13,9 @@ data Direction
   | Up Int
   | Down Int
 
+fromLists :: [[a]] -> RectangularGrid a
+fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>)
+
 manhattanDistance :: Point -> Point -> Int
 manhattanDistance (x1, y1) (x2, y2) =
   abs (x1 - x2) + abs (y1 - y2)
