@@ -12,6 +12,7 @@ data Direction
   | Left Int
   | Up Int
   | Down Int
+  deriving (Eq, Show)
 
 fromLists :: [[a]] -> RectangularGrid a
 fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>)
