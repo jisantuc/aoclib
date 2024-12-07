@@ -7,11 +7,19 @@ newtype RectangularGrid a = RectangularGrid (Vector (Vector a)) deriving (Eq, Sh
 
 type Point = (Int, Int)
 
-data Direction
-  = Right Int
-  | Left Int
-  | Up Int
-  | Down Int
+data Direction a
+  = Right a
+  | Left a
+  | Up a
+  | Down a
+  deriving (Eq, Ord, Show)
+
+fromLists :: [[a]] -> RectangularGrid a
+fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>) . filter (not . null)
+
+replace :: RectangularGrid a -> Point -> a -> RectangularGrid a
+replace (RectangularGrid mat) (row, col) v =
+  RectangularGrid $ Vector.update mat $ Vector.singleton (row, Vector.update (mat ! row) (Vector.singleton (col, v)))
 
 manhattanDistance :: Point -> Point -> Int
 manhattanDistance (x1, y1) (x2, y2) =
@@ -35,3 +43,8 @@ rotateCounterClockwise :: RectangularGrid a -> RectangularGrid a
 rotateCounterClockwise (RectangularGrid grid) =
   transpose $
     RectangularGrid (Vector.reverse <$> grid)
+
+debugShow :: (a -> Char) -> RectangularGrid a -> String
+debugShow p (RectangularGrid mat) =
+  let results = Vector.toList $ Vector.toList . (p <$>) <$> mat
+   in unlines results

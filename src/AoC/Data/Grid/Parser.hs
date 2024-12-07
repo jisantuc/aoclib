@@ -6,4 +6,4 @@ import AoC.Data.Grid.Rectangular (Point)
 import Text.Megaparsec (SourcePos (..), unPos)
 
 sourcePositionToPoint :: SourcePos -> Point
-sourcePositionToPoint (SourcePos {sourceLine, sourceColumn}) = (unPos sourceLine, unPos sourceColumn - 1)
+sourcePositionToPoint (SourcePos {sourceLine, sourceColumn}) = (unPos sourceLine - 1, unPos sourceColumn - 1)
