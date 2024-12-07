@@ -7,11 +7,11 @@ newtype RectangularGrid a = RectangularGrid (Vector (Vector a)) deriving (Eq, Sh
 
 type Point = (Int, Int)
 
-data Direction
-  = Right Int
-  | Left Int
-  | Up Int
-  | Down Int
+data Direction a
+  = Right a
+  | Left a
+  | Up a
+  | Down a
   deriving (Eq, Show)
 
 fromLists :: [[a]] -> RectangularGrid a
