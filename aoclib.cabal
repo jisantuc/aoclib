@@ -59,6 +59,7 @@ test-suite aoclib-test
         type:             exitcode-stdio-1.0
         hs-source-dirs:   test
         other-modules:
+                AoC.Data.Grid.ParserSpec
                 AoC.Data.Grid.RectangularSpec
                 AoC.Data.IntervalSpec
                 AoC.OptimizationSpec
