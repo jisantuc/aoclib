@@ -1,7 +1,10 @@
+{-# LANGUAGE LambdaCase #-}
+
 module AoC.Data.Grid.RectangularSpec where
 
 import AoC.Data.Grid.Rectangular
   ( RectangularGrid (..),
+    debugShow,
     fromLists,
     manhattanDistance,
     rotateClockwise,
@@ -111,3 +114,12 @@ spec =
                 `shouldBe` (rotateCounterClockwise . rotateCounterClockwise) twoByTwo
               (rotateClockwise . rotateClockwise . rotateClockwise) twoByTwo
                 `shouldBe` rotateCounterClockwise twoByTwo
+    describe "debugging" $
+      it "prints a nice string" $ do
+        debugShow
+          ( \case
+              'a' -> '.'
+              _ -> '#'
+          )
+          (fromLists [['a', 'b'], ['c', 'd']])
+          `shouldBe` ".#\n##\n"

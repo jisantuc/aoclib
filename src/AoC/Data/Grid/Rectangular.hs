@@ -39,3 +39,8 @@ rotateCounterClockwise :: RectangularGrid a -> RectangularGrid a
 rotateCounterClockwise (RectangularGrid grid) =
   transpose $
     RectangularGrid (Vector.reverse <$> grid)
+
+debugShow :: (a -> Char) -> RectangularGrid a -> String
+debugShow p (RectangularGrid mat) =
+  let results = Vector.toList $ Vector.toList . (p <$>) <$> mat
+   in unlines results
