@@ -12,7 +12,7 @@ data Direction a
   | Left a
   | Up a
   | Down a
-  deriving (Eq, Show)
+  deriving (Eq, Ord, Show)
 
 fromLists :: [[a]] -> RectangularGrid a
 fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>) . filter (not . null)
