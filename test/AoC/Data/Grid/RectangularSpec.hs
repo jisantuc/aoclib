@@ -9,7 +9,7 @@ import AoC.Data.Grid.Rectangular
     manhattanDistance,
     rotateClockwise,
     rotateCounterClockwise,
-    transpose,
+    transpose, replace,
   )
 import qualified Data.Vector as Vector
 import Test.Hspec (Spec, describe, it, shouldBe)
@@ -24,6 +24,11 @@ spec =
           ( Vector.fromList [Vector.fromList ['a', 'b'], Vector.fromList ['c', 'd']]
           )
       fromLists [['a', 'b'], ['c', 'd'], []] `shouldBe` fromLists [['a', 'b'], ['c', 'd']]
+    it "replaces values as expected" $ do
+      replace (fromLists [['a', 'b'], ['c', 'd']]) (1, 1) 'e'
+        `shouldBe` fromLists [['a', 'b'], ['c', 'e']]
+      replace (fromLists [['a', 'b'], ['c', 'd']]) (0, 1) 'e'
+        `shouldBe` fromLists [['a', 'e'], ['c', 'd']]
     describe "Manhattan distance" $ do
       it "calculates good distances for some example points" $ do
         manhattanDistance (0, 1) (-12, 28) `shouldBe` 39

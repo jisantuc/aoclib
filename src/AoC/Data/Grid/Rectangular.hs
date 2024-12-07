@@ -17,6 +17,10 @@ data Direction a
 fromLists :: [[a]] -> RectangularGrid a
 fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>) . filter (not . null)
 
+replace :: RectangularGrid a -> Point -> a -> RectangularGrid a
+replace (RectangularGrid mat) (row, col) v =
+  RectangularGrid $ Vector.update mat $ Vector.singleton (row, Vector.update (mat ! row) (Vector.singleton (col, v)))
+
 manhattanDistance :: Point -> Point -> Int
 manhattanDistance (x1, y1) (x2, y2) =
   abs (x1 - x2) + abs (y1 - y2)
