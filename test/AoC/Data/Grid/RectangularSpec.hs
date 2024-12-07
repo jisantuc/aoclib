@@ -18,11 +18,12 @@ import Test.Hspec.QuickCheck (prop)
 spec :: Spec
 spec =
   describe "Rectangular grid" $ do
-    it "constructs nicely from lists" $
+    it "constructs nicely from lists" $ do
       fromLists [['a', 'b'], ['c', 'd']]
         `shouldBe` RectangularGrid
           ( Vector.fromList [Vector.fromList ['a', 'b'], Vector.fromList ['c', 'd']]
           )
+      fromLists [['a', 'b'], ['c', 'd'], []] `shouldBe` fromLists [['a', 'b'], ['c', 'd']]
     describe "Manhattan distance" $ do
       it "calculates good distances for some example points" $ do
         manhattanDistance (0, 1) (-12, 28) `shouldBe` 39

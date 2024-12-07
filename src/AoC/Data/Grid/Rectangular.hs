@@ -15,7 +15,7 @@ data Direction
   deriving (Eq, Show)
 
 fromLists :: [[a]] -> RectangularGrid a
-fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>)
+fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>) . filter (not . null)
 
 manhattanDistance :: Point -> Point -> Int
 manhattanDistance (x1, y1) (x2, y2) =
