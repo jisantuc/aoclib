@@ -25,6 +25,7 @@ jobs:
         with:
           target: cabal:aoclib-test
           excludes: |
+            AoC.Data.Grid.ParserSpec,
             AoC.Data.Grid.RectangularSpec,
             AoC.Data.IntervalSpec,
             AoC.OptimizationSpec,
