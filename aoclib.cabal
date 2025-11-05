@@ -28,7 +28,6 @@ library
         exposed-modules:
                 AoC.Data.Grid.Parser
                 AoC.Data.Grid.Rectangular
-                AoC.Data.Interval
                 AoC.Data.Puzzle
                 AoC.Net.Puzzle
                 AoC.Optimization
@@ -61,7 +60,6 @@ test-suite aoclib-test
         other-modules:
                 AoC.Data.Grid.ParserSpec
                 AoC.Data.Grid.RectangularSpec
-                AoC.Data.IntervalSpec
                 AoC.OptimizationSpec
                 AoC.ParserSpec
         

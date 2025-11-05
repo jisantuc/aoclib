@@ -1,7 +1,6 @@
 {
   inputs = {
-    interval-index.url = "github:jisantuc/interval-index";
-    nixpkgs.follows = "interval-index/nixpkgs";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     utils.url = "github:numtide/flake-utils";
   };
 
