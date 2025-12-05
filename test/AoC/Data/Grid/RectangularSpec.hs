@@ -7,9 +7,13 @@ import AoC.Data.Grid.Rectangular
     debugShow,
     fromLists,
     manhattanDistance,
+    numCols,
+    numRows,
+    replace,
     rotateClockwise,
     rotateCounterClockwise,
-    transpose, replace,
+    shape,
+    transpose,
   )
 import qualified Data.Vector as Vector
 import Test.Hspec (Spec, describe, it, shouldBe)
@@ -120,6 +124,17 @@ spec =
                 `shouldBe` (rotateCounterClockwise . rotateCounterClockwise) twoByTwo
               (rotateClockwise . rotateClockwise . rotateClockwise) twoByTwo
                 `shouldBe` rotateCounterClockwise twoByTwo
+    describe "description" $ do
+      it "reports shapes correctly" $
+        let nonEmpty = fromLists [[(), (), ()], [(), (), ()]]
+            empty = fromLists []
+         in do
+              numRows nonEmpty `shouldBe` 2
+              numCols nonEmpty `shouldBe` 3
+              numRows empty `shouldBe` 0
+              numCols empty `shouldBe` 0
+              shape nonEmpty `shouldBe` (2, 3)
+              shape empty `shouldBe` (0, 0)
     describe "debugging" $
       it "prints a nice string" $ do
         debugShow
