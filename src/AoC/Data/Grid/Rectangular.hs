@@ -5,6 +5,13 @@ import qualified Data.Vector as Vector
 
 newtype RectangularGrid a = RectangularGrid (Vector (Vector a)) deriving (Eq, Show)
 
+instance Functor RectangularGrid where
+  fmap f (RectangularGrid mat) = RectangularGrid $ (fmap . fmap) f mat
+
+instance Foldable RectangularGrid where
+  foldMap f (RectangularGrid mat) =
+    (foldMap . foldMap) f mat
+
 type Point = (Int, Int)
 
 data Direction a
@@ -16,6 +23,15 @@ data Direction a
 
 fromLists :: [[a]] -> RectangularGrid a
 fromLists = RectangularGrid . Vector.fromList . (Vector.fromList <$>) . filter (not . null)
+
+numRows :: RectangularGrid a -> Int
+numRows (RectangularGrid mat) = Vector.length mat
+
+numCols :: RectangularGrid a -> Int
+numCols (RectangularGrid mat) = if Vector.null mat then 0 else Vector.length (mat ! 0)
+
+shape :: RectangularGrid a -> (Int, Int)
+shape grid = (numRows grid, numCols grid)
 
 replace :: RectangularGrid a -> Point -> a -> RectangularGrid a
 replace (RectangularGrid mat) (row, col) v =
