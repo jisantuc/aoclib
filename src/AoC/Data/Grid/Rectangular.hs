@@ -3,7 +3,7 @@ module AoC.Data.Grid.Rectangular where
 import Data.Vector (Vector, (!))
 import qualified Data.Vector as Vector
 
-newtype RectangularGrid a = RectangularGrid (Vector (Vector a)) deriving (Eq, Show)
+newtype RectangularGrid a = RectangularGrid {unGrid :: Vector (Vector a)} deriving (Eq, Show)
 
 instance Functor RectangularGrid where
   fmap f (RectangularGrid mat) = RectangularGrid $ (fmap . fmap) f mat
